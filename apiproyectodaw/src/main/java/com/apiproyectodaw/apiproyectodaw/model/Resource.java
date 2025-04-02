@@ -3,6 +3,7 @@ package com.apiproyectodaw.apiproyectodaw.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,6 +50,7 @@ public class Resource {
     private String licencia;
 
     @Column(name = "fecha_subida", nullable = false, updatable = false)
+    @Builder.Default
     private LocalDateTime fechaSubida = LocalDateTime.now();
 
     // Relación con Usuario (Creador del recurso)
@@ -67,5 +69,12 @@ public class Resource {
     @ManyToOne
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categories categoria;
+
+    @PostConstruct
+    public void init() {
+        if (fechaSubida == null) {
+            fechaSubida = LocalDateTime.now();
+        }
+    }
 
 }

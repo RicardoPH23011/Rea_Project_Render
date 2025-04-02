@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,6 +43,14 @@ public class Comments {
     private String contenido;
 
     @Column(name = "fecha", nullable = false, updatable = false)
+    @Builder.Default
     private LocalDateTime fecha = LocalDateTime.now();
+
+    @PostConstruct
+    public void init() {
+        if (fecha == null) {
+            fecha = LocalDateTime.now();
+        }
+    }
     
 }

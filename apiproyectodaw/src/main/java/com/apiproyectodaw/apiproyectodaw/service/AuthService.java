@@ -26,8 +26,22 @@ public class AuthService {
                 .rol(request.getRol())
                 .build();
 
-        userRepository.save(user);
-        return "Usuario registrado exitosamente";
+        // Check if the email already exists in the database
+        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
+        if (existingUser.isPresent()) {
+            // Return a json response with error message
+            return "{ \"message\": \"El correo electrónico ya está en uso\", \"error\": true }";
+        } else {
+            userRepository.save(user);
+
+            if (userRepository.save(user) != null) {
+                // Return a json response with success message
+                return "{ \"message\": \"Usuario registrado exitosamente\", \"error\": false }";
+            } else {
+                return "{ \"message\": \"Error al registrar el usuario\", \"error\": true }";
+            }
+        }
+
     }
 
     public AuthResponse login(AuthRequest request) {
@@ -37,7 +51,8 @@ public class AuthService {
             String token = jwtUtil.generateToken(request.getEmail(), userOpt.get().getRol(), userOpt.get().getNombre());
             return new AuthResponse(token);
         } else {
-            throw new RuntimeException("Credenciales incorrectas");
+            // Return a json response with error message
+            return new AuthResponse("{ \"message\": \"Credenciales inválidas\", \"error\": true }");
         }
     }
 }

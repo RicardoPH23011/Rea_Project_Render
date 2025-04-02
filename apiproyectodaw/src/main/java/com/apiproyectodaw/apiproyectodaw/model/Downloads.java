@@ -2,6 +2,7 @@ package com.apiproyectodaw.apiproyectodaw.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +40,16 @@ public class Downloads {
     private Resource recurso;
 
     @Column(name = "fecha", nullable = false, updatable = false)
+    @Builder.Default
     private LocalDateTime fecha = LocalDateTime.now();
+
+    @PostConstruct
+    public void init() {
+        if (fecha == null) {
+            fecha = LocalDateTime.now();
+        }
+    }
+
+    
     
 }
