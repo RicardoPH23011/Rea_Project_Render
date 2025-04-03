@@ -21,8 +21,13 @@ export class ApiService {
         create: `${this.apiUrl}/ressources`,
         update: (id: number) => `${this.apiUrl}/ressources/${id}`,
         delete: (id: number) => `${this.apiUrl}/ressources/${id}`
-    }
-  };
-
-  
+    },
+    tags: {
+    getAll: `${this.apiUrl}/tags`,
+    getById: (id: number) => `${this.apiUrl}/tags/${id}`,
+    create: `${this.apiUrl}/tags-menu/tags`,
+    update: (id: number) => `${this.apiUrl}/tags/${id}`,
+    delete: (id: number) => `${this.apiUrl}/tags/${id}`
+  }
+};
 }
