@@ -27,7 +27,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Resource {
 
     @Id
@@ -46,9 +45,6 @@ public class Resource {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String urlArchivo;
 
-    @Column(nullable = false, length = 100)
-    private String licencia;
-
     @Column(name = "fecha_subida", nullable = false, updatable = false)
     @Builder.Default
     private LocalDateTime fechaSubida = LocalDateTime.now();
@@ -66,9 +62,15 @@ public class Resource {
     @OneToMany(mappedBy = "recurso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ratings> valoraciones;
 
+    // Relación con Categoría
     @ManyToOne
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categories categoria;
+
+    // Relación con Licencias
+    @ManyToOne
+    @JoinColumn(name = "id_licencia", nullable = false)
+    private Licenses licencia;
 
     @PostConstruct
     public void init() {
@@ -76,5 +78,4 @@ public class Resource {
             fechaSubida = LocalDateTime.now();
         }
     }
-
 }

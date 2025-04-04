@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Categories {
 
     @Id
@@ -29,5 +28,7 @@ public class Categories {
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resource> recursos;
 
-    
+    // Relación con Tags (Una Categoría tiene muchos Tags)
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tags> tags;
 }

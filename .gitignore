@@ -19,6 +19,9 @@
 *.tar.gz
 *.rar
 
+# Ignore node_modules directory
+node_modules/
+
 #ignore .vscode directory
 .vscode/*
 

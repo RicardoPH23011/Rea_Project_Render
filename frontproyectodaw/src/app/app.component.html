@@ -1,4 +1,21 @@
-<app-main-menu></app-main-menu>
+<mat-toolbar color="primary" class="flex items-center justify-between px-4">
+    <!-- Botón de menú (solo visible en pantallas pequeñas) -->
+    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()" class="!text-white !hover:bg-[#202020]">
+      <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-sidenav-container class="h-full">
+    <mat-sidenav #sidenav mode="side" class="bg-gray-200" [opened]="isSidenavOpen">
+        <app-main-menu></app-main-menu>
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+        <div class="p-4">
+        <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
 
-<router-outlet />
+</mat-sidenav-container>
+
+
 
