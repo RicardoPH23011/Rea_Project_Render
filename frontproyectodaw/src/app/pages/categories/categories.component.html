@@ -38,11 +38,11 @@
                             <td>{{ category.descripcion }}</td>
                             <td class="flex justify-center items-center gap-2">
                                 <button mat-mini-fab
-                                    class="cursor-pointer !bg-[#ad1d7d] !text-white !mat-elevation-z0 !rounded-md !shadow-none hover:!border-white hover:!border-2">
+                                    class="cursor-pointer !bg-[#ad1d7d] !text-white !mat-elevation-z0 !rounded-md !shadow-none hover:!border-white hover:!border-2" (click)="openCategoriesEditDialog(category)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                                 <button mat-mini-fab
-                                    class="cursor-pointer !bg-red-500 !text-white !mat-elevation-z0 !rounded-md !shadow-none hover:!border-white hover:!border-2">
+                                    class="cursor-pointer !bg-red-500 !text-white !mat-elevation-z0 !rounded-md !shadow-none hover:!border-white hover:!border-2" (click)="deleteCategory(category.id)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </td>

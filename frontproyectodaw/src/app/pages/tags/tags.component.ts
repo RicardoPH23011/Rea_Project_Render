@@ -11,6 +11,8 @@ import { TagsService } from '../../services/tags.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
+import { TagEditComponent } from '../../components/tag-edit/tag-edit.component';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-tags',
@@ -50,48 +52,41 @@ export class TagsComponent implements OnInit {
   };
 
   listTags: any[] = [];
-  isLoading: boolean = true; // Control de carga de datos
+  isLoading: boolean = true;
+  listCategories: any[] = [];
 
   constructor(
     private dialog: MatDialog,
     private tagsService: TagsService,
-    private router: Router
+    private router: Router,
+    private categoriesService: CategoriesService
   ) { }
 
   ngOnInit(): void {
     this.loadTags();
+    this.getAllCategories();
   }
 
   openTagCreateDialog() {
     const dialogRef = this.dialog.open(TagCreateComponent, {
       width: '450px',
       panelClass: 'custom-border-radius-dialog',
-      data: {
-        id: null,
-        nombre: null,
-        descripcion: null,
-        color: null,
-        categoria: null,
-        edit: false // Indica que es un diálogo de creación
-      }
     });
 
-    dialogRef.afterClosed().subscribe({
-      next: (result) => {
+    dialogRef.componentInstance.isTagSaved.subscribe((isSaved: any) => {
+      console.log(isSaved);
+      if (isSaved.isCreated) {
         Swal.fire({
           icon: 'success',
           title: 'Etiqueta creada',
           text: 'La etiqueta se ha creado correctamente.',
-          showConfirmButton: false
+          showConfirmButton: false,
+          timer: 2500
         });
         // Fuerza la recarga del componente actual
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/tags']);
         });
-
-      },
-      error: (error) => {
-        console.error('Error al abrir el diálogo', error);
       }
     });
   }
@@ -112,21 +107,18 @@ export class TagsComponent implements OnInit {
 
 
   openTagEditDialog(tag: any) {
-    const dialogRef = this.dialog.open(TagCreateComponent, {
+    const dialogRef = this.dialog.open(TagEditComponent, {
       width: '450px',
       panelClass: 'custom-border-radius-dialog',
       data: {
-        id: tag.id,
-        nombre: tag.nombre,
-        descripcion: tag.descripcion,
-        color: tag.color,
-        categoria: tag.categoriaId,
-        edit: true // Indica que es un diálogo de edición
+        tagObject: tag,
+        listCategories: this.listCategories        
       }
     });
 
-    dialogRef.afterClosed().subscribe({
-      next: (result) => {
+    dialogRef.componentInstance.isTagSaved.subscribe((isSaved: any) => {
+      console.log(isSaved);
+      if (isSaved.isUpdated) {
         Swal.fire({
           icon: 'success',
           title: 'Etiqueta editada',
@@ -137,9 +129,6 @@ export class TagsComponent implements OnInit {
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/tags']);
         });
-      },
-      error: (error) => {
-        console.error('Error al abrir el diálogo', error);
       }
     });
   }
@@ -171,6 +160,18 @@ export class TagsComponent implements OnInit {
             console.error('Error al eliminar la etiqueta', error);
           }
         });
+      }
+    });
+  }
+
+  getAllCategories() {
+    this.categoriesService.getCategories().subscribe({
+      next: (response: any) => {
+        this.listCategories = response;
+      },
+      error: (error: any) => {
+        console.error('Error al obtener las categorías', error);
+        // Aquí puedes manejar el error al obtener las categorías
       }
     });
   }

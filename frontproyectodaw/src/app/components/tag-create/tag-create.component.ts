@@ -7,6 +7,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TagsService } from '../../services/tags.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-tag-create',
@@ -26,7 +27,8 @@ export class TagCreateComponent implements OnInit {
   listCategories: any[] = [];
 
   tagForm: FormGroup;
-  isLoading: boolean = true;  
+  isLoading: boolean = true;
+  @Output() isTagSaved = new EventEmitter<any>();
 
   constructor(
     public dialogRef: MatDialogRef<TagCreateComponent>,
@@ -75,6 +77,10 @@ export class TagCreateComponent implements OnInit {
 
       this.tagsService.createTag(newTag).subscribe({
         next: (response: any) => {
+
+          this.isTagSaved.emit({
+            isCreated: true,
+          });
           console.log('Etiqueta creada con éxito', response);
           // Aquí puedes manejar la respuesta después de crear la etiqueta
           this.closeTagCreateDialog();

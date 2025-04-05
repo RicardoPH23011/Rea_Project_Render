@@ -1,9 +1,9 @@
 <div class="w-full bg-white p-8 rounded-lg shadow-md">
-    <h1 class="text-3xl font-bold mb-4 text-black">Crear nueva Categoría</h1>
+    <h1 class="text-3xl font-bold mb-4 text-black">Editar Categoría</h1>
 
     <div class="border-b border-gray-300 mb-4"></div>
     <div class="flex flex-col items-center justify-center">
-        <form class="w-full max-w-md" [formGroup]="categoryForm" (ngSubmit)="createCategory()">
+        <form class="w-full max-w-md" [formGroup]="categoryForm" (ngSubmit)="EditCategory(categoryId)">
             <div class="mb-4">
                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
                 <input type="text" id="name" name="name" required

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-category-create',
@@ -19,6 +20,8 @@ import { CategoriesService } from '../../services/categories.service';
 export class CategoryCreateComponent {
 
   categoryForm: FormGroup;
+
+  @Output() isCategorySaved = new EventEmitter<any>();
 
   constructor(
     private dialogRef: MatDialogRef<CategoryCreateComponent>,
@@ -44,6 +47,11 @@ export class CategoryCreateComponent {
 
       this.categoriesService.createCategory(newCategory).subscribe({
         next: (response) => {
+
+          this.isCategorySaved.emit({
+            isCreated: true,
+          });
+          
           console.log('Categoría creada con éxito', response);
           // Aquí puedes manejar la respuesta después de crear la categoría
           this.closeCategoriesCreateDialog();

@@ -8,6 +8,9 @@ import { CategoriesService } from '../../services/categories.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryCreateComponent } from '../../components/category-create/category-create.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
+import { CategoryEditComponent } from '../../components/category-edit/category-edit.component';
 
 
 @Component({
@@ -26,11 +29,13 @@ export class CategoriesComponent implements OnInit {
 
   listCategories: any[] = [];
   isLoading: boolean = true;
+  isCategorySaved: boolean = false;
 
   constructor(
     private categoriesService: CategoriesService,
-    private dialog: MatDialog
-  ) { }  
+    private dialog: MatDialog,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadCategories();
@@ -57,7 +62,7 @@ export class CategoriesComponent implements OnInit {
       }
 
     },
-  }; 
+  };
 
   loadCategories(): void {
     this.categoriesService.getCategories().subscribe({
@@ -80,20 +85,83 @@ export class CategoriesComponent implements OnInit {
       panelClass: 'custom-border-radius-dialog',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.loadCategories(); // Reload categories after creating a new one
+    dialogRef.componentInstance.isCategorySaved.subscribe((isSaved: any) => {
+      console.log(isSaved);
+      if (isSaved.isCreated) {
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Categoría creada',
+          text: 'La Categoría se ha creado correctamente.',
+          showConfirmButton: false,
+          timer: 2500
+        });
+        
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/categories']);
+        });
       }
     });
   }
 
-  openCategoriesEditDialog(id: number) {
-    // Logic to open the dialog for editing an existing category
-  }
+  openCategoriesEditDialog(category: any) {
+    const dialogRef = this.dialog.open(CategoryEditComponent, {
+      width: '400px',
+      panelClass: 'custom-border-radius-dialog',
+      data: {
+        categoryObject: category
+      }
+    });
 
+    dialogRef.componentInstance.isCategorySaved.subscribe((isSaved: any) => {
+      console.log(isSaved);
+      if (isSaved.isUpdated) {
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Categoría editada',
+          text: 'La Categoría se ha editado correctamente.',
+          showConfirmButton: false,
+          timer: 2500
+        });
+        
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/categories']);
+        });
+      }
+    });
+  }
+  
   deleteCategory(id: number) {
-    // Logic to delete a category
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoriesService.deleteCategory(id).subscribe({
+          next: (response) => {
+            console.log('Categoría eliminada con éxito', response);
+            // Fuerza la recarga del componente actual
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/categories']);
+            });
+          },
+          error: (error) => {
+            console.error('Error al eliminar la categoría', error);
+          }
+        });
+        Swal.fire(
+          'Eliminado!',
+          'La categoría ha sido eliminada.',
+          'success'
+        )
+      }
+    })
   }
-
 
 }
