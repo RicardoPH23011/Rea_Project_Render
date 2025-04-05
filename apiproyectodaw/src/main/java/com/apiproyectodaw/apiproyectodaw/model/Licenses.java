@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "licenses")
 @Getter
@@ -29,5 +31,6 @@ public class Licenses {
 
     // Relación con Resource (una Licencia puede estar asociada a varios recursos)
     @OneToMany(mappedBy = "licencia", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Resource> recursos;
 }

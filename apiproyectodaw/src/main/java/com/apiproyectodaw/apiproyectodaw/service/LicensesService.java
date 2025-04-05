@@ -1,17 +1,17 @@
 package com.apiproyectodaw.apiproyectodaw.service;
 
-import com.apiproyectodaw.apiproyectodaw.controller.LicensesController;
 import com.apiproyectodaw.apiproyectodaw.model.Licenses;
 import com.apiproyectodaw.apiproyectodaw.repository.LicensesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class LicensesService {
 
-     @Autowired
+    @Autowired
     private LicensesRepository licensesRepository;
 
     public List<Licenses> getAllLicenses() {
@@ -30,6 +30,7 @@ public class LicensesService {
         return licensesRepository.findById(id).map(license -> {
             license.setNombre(updatedLicense.getNombre());
             license.setDescripcion(updatedLicense.getDescripcion());
+            license.setUrl(updatedLicense.getUrl());
             return licensesRepository.save(license);
         }).orElseThrow(() -> new RuntimeException("Licencia no encontrada"));
     }
@@ -37,9 +38,4 @@ public class LicensesService {
     public void deleteLicense(Long id) {
         licensesRepository.deleteById(id);
     }
-
-    public LicensesController saveLicense(LicensesController license) {
-        throw new UnsupportedOperationException("Unimplemented method 'saveLicense'");
-    }
-
 }

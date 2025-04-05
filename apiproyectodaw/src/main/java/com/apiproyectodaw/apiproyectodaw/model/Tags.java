@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+// import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tags")
@@ -36,7 +37,7 @@ public class Tags {
     // Relación con Categorías (Cada Tag pertenece a una Categoría)
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnoreProperties({ "recursos", "tags", "descripcion" })
     private Categories categoria;
 
     @PostConstruct

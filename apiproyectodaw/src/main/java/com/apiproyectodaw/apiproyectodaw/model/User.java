@@ -7,6 +7,9 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -38,6 +41,7 @@ public class User {
 
     // Relación con Recursos
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({ "usuario", "comentarios", "valoraciones" })
     private List<Resource> recursos;
 
     // Relación con Comentarios

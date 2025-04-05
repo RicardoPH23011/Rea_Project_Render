@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-menu',
@@ -8,5 +9,13 @@ import { Component } from '@angular/core';
 })
 export class MainMenuComponent {
   title = '';
+
+  constructor(private router: Router) {}
+
+
+  //functionto redirect
+  redirectTo(path: string) {
+    this.router.navigate([path]);
+  }
 
 }

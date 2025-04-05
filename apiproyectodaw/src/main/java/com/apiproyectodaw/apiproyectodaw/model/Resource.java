@@ -3,6 +3,9 @@ package com.apiproyectodaw.apiproyectodaw.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -43,7 +46,7 @@ public class Resource {
     private String tipo; // PDF, VIDEO, CÓDIGO, etc.
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String urlArchivo;
+    private String urlArchivo; // Ruta del archivo en el sistema o URL externa
 
     @Column(name = "fecha_subida", nullable = false, updatable = false)
     @Builder.Default
@@ -52,6 +55,7 @@ public class Resource {
     // Relación con Usuario (Creador del recurso)
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
+    @JsonIgnoreProperties({ "recursos", "comentarios", "valoraciones" })
     private User usuario;
 
     // Relación con Comentarios
@@ -65,6 +69,7 @@ public class Resource {
     // Relación con Categoría
     @ManyToOne
     @JoinColumn(name = "id_categoria", nullable = false)
+    @JsonIgnoreProperties({ "recursos", "tags", "descripcion" })
     private Categories categoria;
 
     // Relación con Licencias
@@ -74,8 +79,14 @@ public class Resource {
 
     @PostConstruct
     public void init() {
+        // Asegurarse de que la fecha de subida esté correctamente inicializada
         if (fechaSubida == null) {
             fechaSubida = LocalDateTime.now();
         }
+    }
+
+    // Método para verificar si el archivo es local o remoto (por ejemplo, video de YouTube)
+    public boolean isArchivoRemoto() {
+        return tipo.equalsIgnoreCase("VIDEO") && (urlArchivo.contains("youtube.com") || urlArchivo.contains("vimeo.com"));
     }
 }

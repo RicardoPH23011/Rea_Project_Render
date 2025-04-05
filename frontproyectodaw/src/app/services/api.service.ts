@@ -16,11 +16,12 @@ export class ApiService {
       register: `${this.apiUrl}/auth/register`
     },
     ressources: {
-      getAll: `${this.apiUrl}/ressources`,
-      getById: (id: number) => `${this.apiUrl}/ressources/${id}`,
-      create: `${this.apiUrl}/ressources`,
-      update: (id: number) => `${this.apiUrl}/ressources/${id}`,
-      delete: (id: number) => `${this.apiUrl}/ressources/${id}`
+      getAll: `${this.apiUrl}/resources`,
+      getById: (id: number) => `${this.apiUrl}/resources/${id}`,
+      create: `${this.apiUrl}/resources`,
+      update: (id: number) => `${this.apiUrl}/resources/${id}`,
+      delete: (id: number) => `${this.apiUrl}/resources/${id}`,
+      createExternal: `${this.apiUrl}/resources/external`,
     },
     tags: {
       getAll: `${this.apiUrl}/tags`,

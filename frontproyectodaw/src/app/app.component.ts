@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -19,12 +19,14 @@ import { MatButtonModule } from '@angular/material/button';
     MatSidenavModule,
     MatToolbarModule,
     MatIcon,
-    MatButtonModule
+    MatButtonModule,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'frontproyectodaw';
   isSidenavOpen = true;
 
@@ -33,6 +35,15 @@ export class AppComponent {
 
   toggleMenu() {
     this.isSidenavOpen = !this.isSidenavOpen;
+  }
+
+  ngOnInit(): void {
+    this.saveUser('1');
+  }
+  
+  // Funcion para guar usuario en localstorage
+  saveUser(user: any) {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
 
