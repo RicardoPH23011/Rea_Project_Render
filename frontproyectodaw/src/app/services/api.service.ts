@@ -36,5 +36,12 @@ export class ApiService {
       update: (id: number) => `${this.apiUrl}/categories/${id}`,
       delete: (id: number) => `${this.apiUrl}/categories/${id}`
     },
-  };
+    licenses:{
+    getAll: `${this.apiUrl}/licenses`,
+      getById: (id: number) => `${this.apiUrl}/licenses/${id}`,
+      create: `${this.apiUrl}/licenses`,
+      update: (id: number) => `${this.apiUrl}/licenses/${id}`,
+      delete: (id: number) => `${this.apiUrl}/licenses/${id}`
+  }
+}
 }
