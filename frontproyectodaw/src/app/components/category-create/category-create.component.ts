@@ -21,7 +21,7 @@ export class CategoryCreateComponent {
   categoryForm: FormGroup;
 
   constructor(
-    private dialogRef:        MatDialogRef<CategoryCreateComponent>,
+    private dialogRef: MatDialogRef<CategoryCreateComponent>,
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService
   ) {

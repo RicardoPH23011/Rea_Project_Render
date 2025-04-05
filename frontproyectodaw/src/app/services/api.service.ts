@@ -25,9 +25,9 @@ export class ApiService {
     tags: {
       getAll: `${this.apiUrl}/tags`,
       getById: (id: number) => `${this.apiUrl}/tags/${id}`,
-      create: `${this.apiUrl}/tags-menu/tags`,
+      create: `${this.apiUrl}/tags`,
       update: (id: number) => `${this.apiUrl}/tags/${id}`,
-      delete: (id: number) => `${this.apiUrl}/tags/${id}`
+      delete: (id: number) => `${this.apiUrl}/tags/${id}`,
     },
     categories: {
       getAll: `${this.apiUrl}/categories`,

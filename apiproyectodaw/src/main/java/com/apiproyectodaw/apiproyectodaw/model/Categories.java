@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "categories")
 @Getter
@@ -30,5 +32,6 @@ public class Categories {
 
     // Relación con Tags (Una Categoría tiene muchos Tags)
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Tags> tags;
 }

@@ -1,12 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { TagCreateComponent } from '../../components/tag-create/tag-create.component';
 import { MatButtonModule } from '@angular/material/button';
-import { DataTablesModule } from "angular-datatables";
+import { DataTableDirective, DataTablesModule } from "angular-datatables";
 import { Config } from 'datatables.net';
 import { Subject } from 'rxjs';
+import { TagsService } from '../../services/tags.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-tags',
@@ -15,11 +19,12 @@ import { Subject } from 'rxjs';
     CommonModule,
     MatButtonModule,
     DataTablesModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './tags.component.html',
   styleUrl: './tags.component.scss'
 })
-export class TagsComponent implements OnInit, OnDestroy {
+export class TagsComponent implements OnInit {
 
   dtOptions: Config = {
     pagingType: 'full_numbers',
@@ -45,47 +50,128 @@ export class TagsComponent implements OnInit, OnDestroy {
   };
 
   listTags: any[] = [];
-  dtTrigger: Subject<void> = new Subject<void>(); // Control de inicialización de DataTables
+  isLoading: boolean = true; // Control de carga de datos
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private tagsService: TagsService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadTags();
   }
 
-  loadTags() {
-    // Simulación de carga de datos (puede venir de una API)
-    this.listTags = [
-      { id: 1, name: 'Programación', description: 'Aprende a programar desde cero', icon: 'code' },
-      { id: 2, name: 'Diseño', description: 'Aprende a diseñar desde cero', icon: 'brush' },
-      { id: 3, name: 'Marketing', description: 'Aprende a hacer marketing desde cero', icon: 'trending_up' },
-      { id: 4, name: 'Negocios', description: 'Aprende a hacer negocios desde cero', icon: 'business' },
-      { id: 5, name: 'Finanzas', description: 'Aprende a manejar tus finanzas desde cero', icon: 'attach_money' },
-      { id: 6, name: 'Salud', description: 'Aprende a cuidar tu salud desde cero', icon: 'favorite' },
-      { id: 7, name: 'Cocina', description: 'Aprende a cocinar desde cero', icon: 'restaurant' },
-      { id: 8, name: 'Música', description: 'Aprende a tocar un instrumento desde cero', icon: 'music_note' },
-      { id: 9, name: 'Fotografía', description: 'Aprende a tomar fotos desde cero', icon: 'photo_camera' },
-      { id: 10, name: 'Viajes', description: 'Aprende a viajar desde cero', icon: 'flight' },
-      { id: 11, name: 'Idiomas', description: 'Aprende un idioma desde cero', icon: 'language' },
-    ];
-
-    this.dtTrigger.next(); // ⚡ Notificar a DataTables que los datos están listos
-  }
-
   openTagCreateDialog() {
     const dialogRef = this.dialog.open(TagCreateComponent, {
       width: '450px',
+      panelClass: 'custom-border-radius-dialog',
+      data: {
+        id: null,
+        nombre: null,
+        descripcion: null,
+        color: null,
+        categoria: null,
+        edit: false // Indica que es un diálogo de creación
+      }
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     this.listTags.push(result);
-    //     this.dtTrigger.next(); // Refrescar DataTables con el nuevo dato
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe({
+      next: (result) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Etiqueta creada',
+          text: 'La etiqueta se ha creado correctamente.',
+          showConfirmButton: false
+        });
+        // Fuerza la recarga del componente actual
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/tags']);
+        });
+
+      },
+      error: (error) => {
+        console.error('Error al abrir el diálogo', error);
+      }
+    });
   }
 
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe(); // Evita fugas de memoria al destruir el componente
+  loadTags() {
+    this.tagsService.getAllTags().subscribe({
+      next: (data: any) => {
+        this.listTags = data;
+        this.isLoading = false;
+        console.log(this.listTags);
+        console.log('Etiquetas cargadas con éxito', data);
+      },
+      error: (error) => {
+        console.error('Error al cargar las etiquetas', error);
+      }
+    });
+  }
+
+
+  openTagEditDialog(tag: any) {
+    const dialogRef = this.dialog.open(TagCreateComponent, {
+      width: '450px',
+      panelClass: 'custom-border-radius-dialog',
+      data: {
+        id: tag.id,
+        nombre: tag.nombre,
+        descripcion: tag.descripcion,
+        color: tag.color,
+        categoria: tag.categoriaId,
+        edit: true // Indica que es un diálogo de edición
+      }
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (result) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Etiqueta editada',
+          text: 'La etiqueta se ha editado correctamente.',
+          showConfirmButton: false
+        });
+        // Fuerza la recarga del componente actual
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/tags']);
+        });
+      },
+      error: (error) => {
+        console.error('Error al abrir el diálogo', error);
+      }
+    });
+  }
+
+  deleteTag(id: number) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.tagsService.deleteTag(id).subscribe({
+          next: () => {
+            Swal.fire(
+              'Eliminado!',
+              'La etiqueta ha sido eliminada.',
+              'success'
+            );
+            // Fuerza la recarga del componente actual
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/tags']);
+            });
+          },
+          error: (error) => {
+            console.error('Error al eliminar la etiqueta', error);
+          }
+        });
+      }
+    });
   }
 }

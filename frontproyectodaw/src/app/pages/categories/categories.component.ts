@@ -77,6 +77,7 @@ export class CategoriesComponent implements OnInit {
   openCategoriesCreateDialog() {
     const dialogRef = this.dialog.open(CategoryCreateComponent, {
       width: '400px',
+      panelClass: 'custom-border-radius-dialog',
     });
 
     dialogRef.afterClosed().subscribe(result => {
