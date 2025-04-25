@@ -55,4 +55,32 @@ public class AuthService {
             return new AuthResponse("{ \"message\": \"Credenciales inválidas\", \"error\": true }");
         }
     }
+
+    public String edit(Long id, User user) {
+        Optional<User> existingUser = userRepository.findById(id);
+        if (existingUser.isPresent()) {
+            User updatedUser = existingUser.get();
+            updatedUser.setNombre(user.getNombre());
+            updatedUser.setEmail(user.getEmail());
+            updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            updatedUser.setRol(user.getRol());
+            userRepository.save(updatedUser);
+            return "{ \"message\": \"Usuario actualizado exitosamente\", \"error\": false }";
+        } else {
+            return "{ \"message\": \"Usuario no encontrado\", \"error\": true }";
+        }
+    }
+
+    public String get(String id) {
+        Optional<User> existingUser = userRepository.findById(id);
+        if (existingUser.isPresent()) { 
+            User user = existingUser.get();
+            return "{ \"nombre\": \"" + user.getNombre() + "\", \"email\": \"" + user.getEmail() + "\", \"rol\": \"" + user.getRol() + "\" }";
+        } else {
+            return "{ \"message\": \"Usuario no encontrado\", \"error\": true }";
+
+        }
+    }
 }
+
+

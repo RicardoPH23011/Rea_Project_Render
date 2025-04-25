@@ -13,7 +13,10 @@ export class ApiService {
   API_ENDPOINTS = {
     authentication: {
       login: `${this.apiUrl}/auth/login`,
-      register: `${this.apiUrl}/auth/register`
+      register: `${this.apiUrl}/auth/register`,
+      //AGREGAR RUTAS DE VER Y EDITAR INFORMACION
+      edit: `${this.apiUrl}/auth/edit`,
+      get: `${this.apiUrl}/auth/get`,
     },
     ressources: {
       getAll: `${this.apiUrl}/resources`,
