@@ -1,25 +1,66 @@
-<div class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+<div id="particles-js" class="absolute inset-0 -z-10"></div>
+<div class="login-banner flex justify-center items-center h-screen relative z-11">
+    <div class="form-container w-1/3 bg-white p-8 rounded shadow-md p-6">
+        <div class="flex justify-between items-center mb-10 gap-2">
+            <div>
+                <h2 class="text-2xl font-bold text-center">Plataforma ARA</h2>
+            </div>
+            <div>
+                <button mat-flat-button
+                    class="!rounded-sm !bg-[#ad1d7d] hover:!bg-[#202020] !text-white" id="btn_login">Ingresar</button>
+                <button mat-flat-button
+                    class="!rounded-sm !bg-[#ad1d7d] hover:!bg-[#202020] !text-white ml-2" id="btn_register">Registrarse</button>
+            </div>
+        </div>
+        <div class="mb-6 mt-10">
+            <h2 class="text-2xl font-bold text-[#ad1d7d]">¡BIENVENIDO!</h2>
+            <h3 class="text-uppercase text-2xl">Ingresa a tu cuenta</h3>
+        </div>
         <form class="space-y-4" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-            <mat-form-field appearance="fill" class="w-full mb-4">
-                <mat-label>Email</mat-label>
-                <input matInput type="email" placeholder="Enter your email" required formControlName="email"/>
-            </mat-form-field>
+            <div class="w-full mb-8">
+                <label class="text-gray-500 text-lg">Correo:</label>
+                <input type="email" placeholder="ejemplo@ejemplo.com" required formControlName="email" class="w-full" />
+            </div>
 
-            <mat-form-field appearance="fill" class="w-full mb-6">
-                <mat-label>Password</mat-label>
-                <input matInput type="password" placeholder="Enter your password" required formControlName="password"/>
-            </mat-form-field>
+            <div class="w-full mb-10">
+                <label class="text-gray-500 text-lg">Contraseña:</label>
+                <input type="password" placeholder="Ingresa tu contraseña" required formControlName="password"
+                    class="w-full" />
+            </div>
 
-            <button mat-raised-button color="primary" class="w-full py-2">Login</button>
+            <div class="flex justify-between items-center mb-6">
+                <div>
+
+                    <label for="remember-me" class="text-gray-500">
+                        <input type="checkbox" id="remember-me" class="mr-1" />
+                        Recordar mi contraseña
+                    </label>
+                </div>
+                <div>
+                    <a href="#" class="text-gray-500 hover:text-gray-900">¿Olvidaste tu contraseña?</a>
+                </div>
+            </div>
+
+            <button mat-raised-button color="primary"
+                class="w-full py-2 px-4 !rounded-sm !bg-[#ad1d7d] hover:!bg-[#202020] !text-white flex items-center justify-center"
+                [disabled]="loginForm.invalid"
+                type="submit"
+                >
+                <mat-spinner [diameter]="30" [mode]="mode" class="text-[#ad1d7d]" *ngIf="loading"></mat-spinner>
+                <span *ngIf="!loading">Iniciar sesión</span>
+                </button>
 
             <!-- Validations -->
-            <div *ngIf="loginForm.invalid && (loginForm.dirty || loginForm.touched)" class="text-red-500 text-sm mt-2">
+            <div *ngIf="loginForm.invalid && (loginForm.dirty || loginForm.touched)" class="text-red-500 text-sm mt-2 bg-red-100 p-2 rounded border border-red-500">
                 <div *ngIf="loginForm.controls['email'].hasError('required')">Email is required.</div>
                 <div *ngIf="loginForm.controls['email'].hasError('email')">Invalid email format.</div>
                 <div *ngIf="loginForm.controls['password'].hasError('required')">Password is required.</div>
-                <div *ngIf="loginForm.controls['password'].hasError('minlength')">Password must be at least 6 characters long.</div>
+                <div *ngIf="loginForm.controls['password'].hasError('minlength')">Password must be at least 6 characters
+                    long.</div>
+                <div *ngIf="loginForm.controls['password'].hasError('pattern')">
+                    <!-- /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/ -->
+                    Password must contain at least one uppercase letter, one lowercase letter, and one number.
+                </div>
             </div>
         </form>
     </div>
