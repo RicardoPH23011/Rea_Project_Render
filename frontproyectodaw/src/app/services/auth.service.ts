@@ -15,7 +15,7 @@ export class AuthService {
         return this.http.post(this.apiService.API_ENDPOINTS.authentication.login, { "email": email, "password": password })
             .pipe(tap((response: any) => {
                 if (response && response.token) {
-                    localStorage.setItem('token', response.token);
+                    sessionStorage.setItem('token', response.token);
                 }
             }));
     }
@@ -25,15 +25,15 @@ export class AuthService {
     }
 
     logout(): void {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
     }
 
     isLoggedIn(): boolean {
-        return !!localStorage.getItem('token');
+        return !!sessionStorage.getItem('token');
     }
 
     getUserId(): string | null {
-        return localStorage.getItem('user');
+        return sessionStorage.getItem('user');
     }
 
 }

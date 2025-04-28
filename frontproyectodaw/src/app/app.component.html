@@ -1,8 +1,18 @@
-<mat-toolbar color="primary" class="flex items-center justify-between px-4">
+<mat-toolbar color="primary" class="flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-10">
     <!-- Botón de menú (solo visible en pantallas pequeñas) -->
     <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()" class="!text-white !hover:bg-[#202020]">
       <mat-icon>menu</mat-icon>
     </button>
+    <div class="flex items-center justify-center gap-2">
+        <button mat-raised-button (click)="redirectToLogin()" class="bg-[#ad1d7d] hover:bg-[#ad1d7d] text-white">
+            <mat-icon class="mr-2">login</mat-icon>
+            Ingresar
+        </button>
+        <button mat-raised-button class="ml-2">
+            <mat-icon class="mr-2">person_add</mat-icon>
+            Registrarse
+        </button>
+    </div>
 </mat-toolbar>
 <mat-sidenav-container class="h-full">
     <mat-sidenav #sidenav mode="side" class="bg-gray-200" [opened]="isSidenavOpen">
@@ -10,7 +20,7 @@
     </mat-sidenav>
     
     <mat-sidenav-content>
-        <div class="p-4">
+        <div>
         <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>
