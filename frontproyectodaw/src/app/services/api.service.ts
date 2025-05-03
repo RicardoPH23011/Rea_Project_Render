@@ -24,6 +24,10 @@ export class ApiService {
       create: `${this.apiUrl}/resources`,
       update: (id: number) => `${this.apiUrl}/resources/${id}`,
       delete: (id: number) => `${this.apiUrl}/resources/${id}`,
+      //AGREGAR RUTAS DE VER RECURSOS POR ID DE USUARIO
+      getByUser: (userId: number) => `${this.apiUrl}/resources/user/${userId}`,
+      //Busqueda de recursos por tipo
+      search: `${this.apiUrl}/resources/search`,
       createExternal: `${this.apiUrl}/resources/external`,
     },
     tags: {
