@@ -4,6 +4,10 @@ import { TagsComponent } from './pages/tags/tags.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { LicensesComponent } from './pages/licenses/licenses.component';
 import { ResourceComponent } from './pages/resource/resource.component';
+import { DashboardStudentsComponent } from './pages/dashboard-students/dashboard-students.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { InformacionComponent } from './pages/informacion/informacion.component';
+import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -11,4 +15,14 @@ export const routes: Routes = [
     { path: 'categories', component: CategoriesComponent },
     { path: 'licenses', component: LicensesComponent },
     { path: 'resources', component: ResourceComponent },
+    {
+        path: 'dashboard',
+        component: DashboardStudentsComponent,
+        children:
+        [
+            { path: 'perfil', component: PerfilComponent },
+            { path: 'informacion', component: InformacionComponent },
+            { path: 'configuracion', component: ConfiguracionComponent }
+        ]
+    }
 ];
