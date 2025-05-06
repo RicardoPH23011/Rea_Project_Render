@@ -71,7 +71,7 @@ public class AuthService {
         }
     }
 
-    public String get(String id) {
+    public String get(Long id) {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) { 
             User user = existingUser.get();
