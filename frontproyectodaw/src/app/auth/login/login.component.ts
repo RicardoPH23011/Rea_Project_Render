@@ -7,6 +7,8 @@ import { AuthService } from '../../services/auth.service';
 import { MatInputModule } from '@angular/material/input';
 // import * as particlesJS from 'particles.js/particles';
 import { MatProgressSpinnerModule, ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 
 declare var particlesJS: any;
@@ -20,7 +22,8 @@ declare var particlesJS: any;
     FormsModule,
     CommonModule,
     MatInputModule,
-    MatProgressSpinnerModule    
+    MatProgressSpinnerModule,
+    MatIcon
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -36,14 +39,16 @@ export class LoginComponent implements AfterViewInit {
 
   loginForm: FormGroup;
   required: any;
-  mode : ProgressSpinnerMode = 'indeterminate';
-  color : string = 'secondary';
+  mode: ProgressSpinnerMode = 'indeterminate';
+  color: string = 'secondary';
   loading: boolean = false;
+  shouldShakeEmail: boolean = false;
+  shouldShakePassword: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)]]
+      password: ['', [Validators.required]]
     });
   }
 
@@ -54,9 +59,19 @@ export class LoginComponent implements AfterViewInit {
 
       this.authService.login(email, password).subscribe({
         next: (response) => {
+          console.log(response);
           this.loading = true; // Set loading to true when the request starts
-          console.log('Login successful', response);
-          // Handle successful login, e.g., redirect to another page
+          if(response.error) {
+            this.loading = false; // Set loading to false when the request fails
+            
+            console.error('Login failed', response.error);
+            // Handle login error, e.g., show an error message
+
+          } else {
+            this.loading = true; // Set loading to false when the request succeeds
+            console.log('Login successful', response);
+            // Handle successful login, e.g., redirect to another page or show a success message
+          }
         },
         error: (error) => {
           this.loading = false; // Set loading to false when the request fails
@@ -79,6 +94,31 @@ export class LoginComponent implements AfterViewInit {
       button.style.borderStyle = 'solid';
     }
   }
-  
+
+  onInputBlur() {
+    const emailControl = this.loginForm.get('email');
+    const passwordControl = this.loginForm.get('password');
+    if (emailControl && emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+      this.shouldShakeEmail = true;
+
+      // Detenemos la animación después de que termine (300ms es lo que dura la animación)
+      setTimeout(() => {
+        this.shouldShakeEmail = false;
+      }, 300);
+    } else if (passwordControl && passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)) {
+      this.shouldShakePassword = true;
+
+      // Detenemos la animación después de que termine (300ms es lo que dura la animación)
+      setTimeout(() => {
+        this.shouldShakePassword = false;
+      }, 300);
+    }
+  }
+
+  redirecToRegister() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/register']);
+    });
+  }
 
 }

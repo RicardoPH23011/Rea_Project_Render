@@ -8,7 +8,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { routeTransitionAnimations } from '../route-transition';
 
 
 @Component({
@@ -22,6 +23,9 @@ import { Router } from '@angular/router';
     MatIcon,
     MatButtonModule
   ],
+  animations: [
+    routeTransitionAnimations
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -30,7 +34,7 @@ export class AppComponent implements OnInit {
   isSidenavOpen = true;
 
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, public route: ActivatedRoute) {}
 
   toggleMenu() {
     this.isSidenavOpen = !this.isSidenavOpen;
@@ -48,6 +52,11 @@ export class AppComponent implements OnInit {
   // Función para redireccionar a la página de login
   redirectToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  // Función para redireccionar a la página de registro
+  redirectToRegister() {
+    this.router.navigate(['/register']);
   }
 
 

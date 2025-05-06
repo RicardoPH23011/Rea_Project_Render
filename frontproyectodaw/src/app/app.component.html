@@ -8,7 +8,7 @@
             <mat-icon class="mr-2">login</mat-icon>
             Ingresar
         </button>
-        <button mat-raised-button class="ml-2">
+        <button mat-raised-button class="ml-2" (click)="redirectToRegister()" color="accent">
             <mat-icon class="mr-2">person_add</mat-icon>
             Registrarse
         </button>
@@ -20,7 +20,7 @@
     </mat-sidenav>
     
     <mat-sidenav-content>
-        <div>
+        <div [@routeTransition]="route.snapshot.data" style="display: contents;">
         <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>
