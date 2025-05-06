@@ -5,6 +5,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { LicensesComponent } from './pages/licenses/licenses.component';
 import { ResourceComponent } from './pages/resource/resource.component';
 import { LandingComponent } from './pages/landing/landing.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -13,4 +14,5 @@ export const routes: Routes = [
     { path: 'licenses', component: LicensesComponent },
     { path: 'resources', component: ResourceComponent },
     { path: '', component: LandingComponent },
+    { path: 'register', component: RegisterComponent },
 ];
