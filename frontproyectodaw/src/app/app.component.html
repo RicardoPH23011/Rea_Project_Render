@@ -1,8 +1,15 @@
 <mat-toolbar color="primary" class="flex items-center justify-between px-4">
     <!-- Botón de menú (solo visible en pantallas pequeñas) -->
     <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()" class="!text-white !hover:bg-[#202020]">
-      <mat-icon>menu</mat-icon>
+        <mat-icon>menu</mat-icon>
     </button>
+
+    <!-- Espaciador para empujar el perfil a la derecha -->
+    <span class="flex-1"></span>
+
+    <!-- Componente de perfil -->
+    <app-profile-menu></app-profile-menu>
+
 </mat-toolbar>
 <mat-sidenav-container class="h-full">
     <mat-sidenav #sidenav mode="side" class="bg-gray-200" [opened]="isSidenavOpen">
