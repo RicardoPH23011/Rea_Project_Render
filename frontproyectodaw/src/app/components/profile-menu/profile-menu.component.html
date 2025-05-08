@@ -1,13 +1,14 @@
 <button mat-button [matMenuTriggerFor]="menu" class="!text-white">
-    <img src="AvatarMan1.jpg"
+    <img [src]="avatar"
       class="w-10 h-10 rounded-full" alt="Avatar" />
   </button>
   
   <mat-menu #menu="matMenu">
-    <div class="px-4 py-2 flex items-center">
+    <div class="px-4 py-2 flex items-center space-x-4">
+      <img [src]="avatar" class="w-10 h-10 rounded-full" alt="Avatar" />
       <div>
-        <div class="font-medium">{{nombre}}</div>
-        <div class="font-medium">{{email}}</div>
+        <div class="font-medium">{{ nombre }}</div>
+        <div class="font-medium text-sm text-gray-500">{{ email }}</div>
       </div>
     </div>
     <mat-divider></mat-divider>

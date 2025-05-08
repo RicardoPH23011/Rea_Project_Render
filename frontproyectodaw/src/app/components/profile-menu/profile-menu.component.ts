@@ -22,6 +22,7 @@ export class ProfileMenuComponent {
   nombre: string = '';
   email: string = '';
   rol: string = '';
+  avatar: string = '';
 
   constructor(private authService: AuthService) {}
 
@@ -29,6 +30,7 @@ export class ProfileMenuComponent {
     const user = this.authService.getUserName();
     const email = this.authService.getUserEmail();
     const rol = this.authService.getUserRole();
+    const avatar = this.authService.getUserAvatar();
     if (rol) {
       this.rol = rol;
     }
@@ -37,6 +39,9 @@ export class ProfileMenuComponent {
     }
     if (email) {
       this.email = email;
+    }
+    if (avatar) {
+      this.avatar = avatar;
     }
   }
 
