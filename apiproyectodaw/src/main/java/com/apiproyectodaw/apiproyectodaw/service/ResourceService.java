@@ -3,7 +3,7 @@ package com.apiproyectodaw.apiproyectodaw.service;
 import com.apiproyectodaw.apiproyectodaw.config.FileStorageProperties;
 import com.apiproyectodaw.apiproyectodaw.model.Resource;
 import com.apiproyectodaw.apiproyectodaw.repository.ResourceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -26,7 +26,7 @@ public class ResourceService {
     private final ResourceRepository resourceRepository;
     private final Path fileStorageLocation;
 
-    @Autowired
+    // @Autowired
     public ResourceService(ResourceRepository resourceRepository, FileStorageProperties fileStorageProperties) {
         this.resourceRepository = resourceRepository;
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
