@@ -24,6 +24,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .rol(request.getRol())
+                .avatar(request.getAvatar())
                 .build();
 
         // Check if the email already exists in the database
@@ -48,7 +49,7 @@ public class AuthService {
         Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
 
         if (userOpt.isPresent() && passwordEncoder.matches(request.getPassword(), userOpt.get().getPassword())) {
-            String token = jwtUtil.generateToken(request.getEmail(), userOpt.get().getRol(), userOpt.get().getNombre());
+            String token = jwtUtil.generateToken(request.getEmail(), userOpt.get().getRol(), userOpt.get().getNombre(), userOpt.get().getAvatar());
             return new AuthResponse(token);
         } else {
             // Return a json response with error message

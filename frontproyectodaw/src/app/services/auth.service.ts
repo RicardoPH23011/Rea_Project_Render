@@ -20,8 +20,8 @@ export class AuthService {
             }));
     }
 
-    register(name: string, email: string, password: string, rol: string): Observable<any> {
-        return this.http.post(this.apiService.API_ENDPOINTS.authentication.register, { name, email, password, rol });
+    register(name: string, email: string, password: string, rol: string, avatar: string): Observable<any> {
+        return this.http.post(this.apiService.API_ENDPOINTS.authentication.register, { name, email, password, rol, avatar});
     }
 
     logout(): void {
@@ -34,6 +34,36 @@ export class AuthService {
 
     getUserId(): string | null {
         return localStorage.getItem('user');
+    }
+
+    getUserName(): string | null {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            const payload = token.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payload));
+            return decodedPayload.nombre;
+        }
+        return null;
+    }
+
+    getUserEmail(): string | null {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            const payload = token.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payload));
+            return decodedPayload.sub;
+        }
+        return null;
+    }
+
+    getUserRole(): string | null {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            const payload = token.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payload));
+            return decodedPayload.rol;
+        }
+        return null;
     }
 
 }

@@ -35,6 +35,9 @@ public class User {
     @Column(nullable = false, length = 20)
     private String rol; // ADMIN, ESTUDIANTE, TUTOR
 
+    @Column(nullable = false, length = 100)
+    private String avatar;
+
     @Column(name = "fecha_registro", nullable = false, updatable = false)
     @Builder.Default
     private LocalDateTime fechaRegistro = LocalDateTime.now();
