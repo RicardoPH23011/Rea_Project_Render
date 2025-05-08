@@ -108,18 +108,10 @@ public class ResourceController {
     @PostMapping("/external")
     public ResponseEntity<?> createExternalResource(@RequestBody ResourceDTO resourceDTO) {
         try {
-            // Obtener entidades relacionadas
-            // User usuario = userService.getUserById(resourceDTO.getIdUsuario())
-            // .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            //Obtener entidades relacionadas
+            User usuario = userService.getUserById(resourceDTO.getIdUsuario())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-            // Asignar un usuario fijo con id = 1
-            User usuario = new User();
-            usuario.setId(1L); // Establece el ID fijo (por ejemplo, 1)
-            usuario.setNombre("Usuario de prueba"); // Establece un nombre fijo
-            usuario.setEmail("test@example.com"); // Establece un email fijo
-            usuario.setPassword("1234"); // Establece una contraseña fija
-            usuario.setRol("ADMIN"); // Establece un rol fijo
-            usuario.setFechaRegistro(LocalDateTime.now());
 
             Categories categoria = categoriesService.getCategoryById(resourceDTO.getIdCategoria())
                     .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));

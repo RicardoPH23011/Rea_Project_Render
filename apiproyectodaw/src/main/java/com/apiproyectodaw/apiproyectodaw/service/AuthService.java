@@ -18,7 +18,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public String register(RegisterRequest request) {
+    public AuthResponse register(RegisterRequest request) {
         User user = User.builder()
                 .nombre(request.getNombre())
                 .email(request.getEmail())
@@ -31,15 +31,16 @@ public class AuthService {
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
             // Return a json response with error message
-            return "{ \"message\": \"El correo electrónico ya está en uso\", \"error\": true }";
+            return new AuthResponse(null, true, "El correo electrónico ya existe. Por favor, use otro.");
         } else {
             userRepository.save(user);
 
             if (userRepository.save(user) != null) {
                 // Return a json response with success message
-                return "{ \"message\": \"Usuario registrado exitosamente\", \"error\": false }";
+                return new AuthResponse(null, false, "Usuario registrado exitosamente. Será redirigido a la página de inicio de sesión.");
             } else {
-                return "{ \"message\": \"Error al registrar el usuario\", \"error\": true }";
+                // Return a json response with error message
+                return new AuthResponse(null, true, "Error al registrar el usuario. Por favor, inténtelo de nuevo.");
             }
         }
 
@@ -49,11 +50,16 @@ public class AuthService {
         Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
 
         if (userOpt.isPresent() && passwordEncoder.matches(request.getPassword(), userOpt.get().getPassword())) {
+<<<<<<< HEAD
             String token = jwtUtil.generateToken(request.getEmail(), userOpt.get().getRol(), userOpt.get().getNombre(), userOpt.get().getAvatar());
             return new AuthResponse(token);
+=======
+            String token = jwtUtil.generateToken(request.getEmail(), userOpt.get().getRol(), userOpt.get().getNombre());
+            return new AuthResponse(token, false, "Login exitoso");
+>>>>>>> e28a885df4abfdab65c362bcab3043993ad98696
         } else {
             // Return a json response with error message
-            return new AuthResponse("{ \"message\": \"Credenciales inválidas\", \"error\": true }");
+            return new AuthResponse(null, true, "Credenciales inválidas");
         }
     }
 

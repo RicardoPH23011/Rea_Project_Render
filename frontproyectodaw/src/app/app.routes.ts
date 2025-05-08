@@ -8,6 +8,8 @@ import { DashboardStudentsComponent } from './pages/dashboard-students/dashboard
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { InformacionComponent } from './pages/informacion/informacion.component';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
+import { LandingComponent } from './pages/landing/landing.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -25,4 +27,6 @@ export const routes: Routes = [
             { path: 'configuracion', component: ConfiguracionComponent }
         ]
     }
+    { path: '', component: LandingComponent },
+    { path: 'register', component: RegisterComponent },
 ];
