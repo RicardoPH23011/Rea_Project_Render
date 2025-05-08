@@ -19,9 +19,11 @@ body {
     width: 325px !important;
     min-width: 325px !important;
 }
+
 .mat-toolbar {
     background-color: var(--mat-sys-primary) !important;
 }
+
 .mat-drawer-content {
     background-color: #ebedf4 !important;
 }
@@ -49,6 +51,15 @@ div.dt-container .dt-paging nav .dt-paging-button.current:hover {
     color: white !important;
     border-radius: 5px !important;
 }
+
 .custom-border-radius-dialog .mat-mdc-dialog-surface {
     border-radius: 10px !important;
+}
+
+.custom-spinner-white circle {
+    stroke: white !important;
+}
+
+.custom-spinner-primary circle {
+    stroke: #ad1d7d !important;
 }

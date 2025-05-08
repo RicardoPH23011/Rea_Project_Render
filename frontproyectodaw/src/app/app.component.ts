@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Router, ActivatedRoute } from '@angular/router';
+import { routeTransitionAnimations } from '../route-transition';
 
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,6 +34,10 @@ import { ProfileMenuComponent } from './components/profile-menu/profile-menu.com
     MatIconModule,
     MatDividerModule,
     ProfileMenuComponent
+    MatButtonModule
+  ],
+  animations: [
+    routeTransitionAnimations
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -41,7 +47,7 @@ export class AppComponent implements OnInit {
   isSidenavOpen = true;
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router, public route: ActivatedRoute) {}
 
   toggleMenu() {
     this.isSidenavOpen = !this.isSidenavOpen;
@@ -54,6 +60,16 @@ export class AppComponent implements OnInit {
   // Funcion para guar usuario en localstorage
   saveUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  // Función para redireccionar a la página de login
+  redirectToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  // Función para redireccionar a la página de registro
+  redirectToRegister() {
+    this.router.navigate(['/register']);
   }
 
 
