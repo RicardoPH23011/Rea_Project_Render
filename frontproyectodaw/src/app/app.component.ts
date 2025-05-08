@@ -11,6 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router, ActivatedRoute } from '@angular/router';
 import { routeTransitionAnimations } from '../route-transition';
 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { ProfileMenuComponent } from './components/profile-menu/profile-menu.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -21,6 +27,14 @@ import { routeTransitionAnimations } from '../route-transition';
     MatSidenavModule,
     MatToolbarModule,
     MatIcon,
+    MatButtonModule,
+    RouterLink,
+    RouterLinkActive,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    ProfileMenuComponent,
     MatButtonModule
   ],
   animations: [
