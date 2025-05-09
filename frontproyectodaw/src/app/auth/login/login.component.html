@@ -18,6 +18,14 @@
       <h3 class="uppercase text-lg mt-2 font-bold">Ingresa a tu cuenta</h3>
     </div>
 
+    <!-- Errores de login -->
+    <div *ngIf="loginFailed.loginError" class="text-red-500 text-sm mb-4 bg-red-100 p-2 rounded border border-red-500">
+      <div class="flex items-center gap-2">
+        <mat-icon>error</mat-icon>
+        {{ loginFailed.loginFailedMessage }}
+      </div>
+    </div>
+
     <form class="space-y-4" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
 
       <!-- Correo -->

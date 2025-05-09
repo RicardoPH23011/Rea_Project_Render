@@ -44,6 +44,10 @@ export class LoginComponent implements AfterViewInit {
   loading: boolean = false;
   shouldShakeEmail: boolean = false;
   shouldShakePassword: boolean = false;
+  loginFailed: any = {
+    loginError: false,
+    loginFailedMessage: 'Correo o contraseña incorrectos. Por favor, inténtelo de nuevo.',
+  }
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
@@ -57,6 +61,8 @@ export class LoginComponent implements AfterViewInit {
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
 
+      this.loginFailed.loginError = false;
+
       this.authService.login(email, password).subscribe({
         next: (response) => {
           console.log(response);
@@ -66,16 +72,21 @@ export class LoginComponent implements AfterViewInit {
             
             console.error('Login failed', response.error);
             // Handle login error, e.g., show an error message
+            this.loginFailed.loginError = true;            
 
           } else {
             this.loading = true; // Set loading to false when the request succeeds
             console.log('Login successful', response);
             // Handle successful login, e.g., redirect to another page or show a success message
+
+            this.router.navigate(['/dashboard']);
+
           }
         },
         error: (error) => {
           this.loading = false; // Set loading to false when the request fails
           console.error('Login failed', error);
+          this.loginFailed.loginError = false;
           // Handle login error, e.g., show an error message
         },
       }
