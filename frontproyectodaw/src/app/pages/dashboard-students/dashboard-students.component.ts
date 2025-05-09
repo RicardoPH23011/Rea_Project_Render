@@ -1,22 +1,19 @@
 import { Component } from '@angular/core';
-import  { RouterLink, RouterLinkActive, Router, RouterOutlet } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
+import { PerfilComponent } from "../perfil/perfil.component";
+import { ConfiguracionComponent } from "../configuracion/configuracion.component";
+import { InformacionComponent } from "../informacion/informacion.component";
+
 
 @Component({
   selector: 'app-dashboard-students',
-  standalone: true,
-  imports:[
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-  ],
+  imports: [
+    MatTabsModule,
+    PerfilComponent,
+    ConfiguracionComponent,
+    InformacionComponent
+],
   templateUrl: './dashboard-students.component.html',
   styleUrl: './dashboard-students.component.scss'
 })
-export class DashboardStudentsComponent{
-  constructor(private router: Router) {}
-
-  //functionto redirect
-  redirectTo(path: string) {
-    this.router.navigate([path]);
-  }
-}
+export class DashboardStudentsComponent{}

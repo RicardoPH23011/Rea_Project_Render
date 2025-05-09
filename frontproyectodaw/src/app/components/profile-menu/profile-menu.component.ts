@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-menu',
@@ -18,13 +19,17 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './profile-menu.component.scss'
 })
 export class ProfileMenuComponent {
+  constructor(private router: Router, private authService: AuthService) {}
+
+  //functionto redirect
+  redirectTo(path: string) {
+    this.router.navigate([path]);
+  }
 
   nombre: string = '';
   email: string = '';
   rol: string = '';
   avatar: string = '';
-
-  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     const user = this.authService.getUserName();

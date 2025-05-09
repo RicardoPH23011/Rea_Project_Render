@@ -1,28 +1,25 @@
 <button mat-button [matMenuTriggerFor]="menu" class="!text-white">
-    <img [src]="avatar"
-      class="w-10 h-10 rounded-full" alt="Avatar" />
+  <img [src]="avatar" class="w-10 h-10 rounded-full" alt="Avatar" />
+</button>
+
+<mat-menu #menu="matMenu" class="!bg-[#fff9fbf9]">
+  <div class="px-4 py-4 flex flex-col items-center text-center">
+    <img [src]="avatar" class="w-16 h-16 rounded-full mb-2" alt="Avatar" />
+    <div class="font-medium text-lg">{{ nombre }}</div>
+    <div class="font-medium text-sm text-gray-500">{{ rol }}</div>
+    <div class="font-medium text-sm text-gray-500">{{ email }}</div>
+  </div>
+  <mat-divider></mat-divider>
+  <button mat-menu-item routerLink="/perfil" (click)="redirectTo('perfil')">
+    <mat-icon>person</mat-icon>
+    <span>Perfil</span>
   </button>
-  
-  <mat-menu #menu="matMenu">
-    <div class="px-4 py-2 flex items-center space-x-4">
-      <img [src]="avatar" class="w-10 h-10 rounded-full" alt="Avatar" />
-      <div>
-        <div class="font-medium">{{ nombre }}</div>
-        <div class="font-medium text-sm text-gray-500">{{ email }}</div>
-      </div>
-    </div>
-    <mat-divider></mat-divider>
-    <button mat-menu-item routerLink="/perfil">
-      <mat-icon>person</mat-icon>
-      <span>Perfil</span>
-    </button>
-    <button mat-menu-item routerLink="/preferencias">
-      <mat-icon>settings</mat-icon>
-      <span>Preferencias</span>
-    </button>
-    <button mat-menu-item routerLink="/informacion">
-      <mat-icon>info</mat-icon>
-      <span>Información</span>
-    </button>
-  </mat-menu>
-  
+  <button mat-menu-item routerLink="/preferences" (click)="redirectTo('preferences')">
+    <mat-icon>settings</mat-icon>
+    <span>Preferencias</span>
+  </button>
+  <button mat-menu-item routerLink="/informacion" (click)="redirectTo('informacion')">
+    <mat-icon>info</mat-icon>
+    <span>Información</span>
+  </button>
+</mat-menu>

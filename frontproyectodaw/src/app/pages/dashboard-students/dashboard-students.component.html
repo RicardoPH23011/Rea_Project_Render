@@ -1,16 +1,19 @@
-<div class="w-full h-screen flex flex-col" class="mt-2 flex items-center justify-between px-6 py-2 bg-[#828486] text-white border-b-4 border-[#555c5f]">
-      <div class="font-semibold">Recursos de estudiante</div>
-      
-      <nav class="flex gap-6">
-        <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-white hover:text-[#828486] cursor-pointer"
-        routerLink="perfil" routerLinkActive="active" ariaCurrentWhenActive="page">Perfil</a>
-
-        <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-white hover:text-[#828486]  cursor-pointer"
-        routerLink="informacion" routerLinkActive="active" ariaCurrentWhenActive="page">Información</a>
-
-        <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-white hover:text-[#828486]  cursor-pointer"
-        routerLink="configuracion" routerLinkActive="active" ariaCurrentWhenActive="page">Configuración</a>
-      </nav>
-  </div>
-
-<router-outlet></router-outlet>
+<div class="bg-white p-6 w-full rounded-md shadow-md" class="mt-[64px] bg-white p-6 w-full rounded-md shadow-md">
+<mat-tab-group >
+  <mat-tab label="Perfil">
+    <div class="mt-4">
+      <app-perfil></app-perfil>
+    </div>
+  </mat-tab>
+  <mat-tab label="Configuración">
+    <div class="mt-4">
+      <app-configuracion></app-configuracion>
+    </div>
+  </mat-tab>
+  <mat-tab label="Información">
+    <div class="mt-4">
+      <app-informacion></app-informacion>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+</div>
