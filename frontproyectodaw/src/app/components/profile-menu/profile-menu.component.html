@@ -1,15 +1,15 @@
 <button mat-button [matMenuTriggerFor]="menu" class="!text-white">
-  <img [src]="avatar" class="w-10 h-10 rounded-full" alt="Avatar" />
+  <img [src]="userInformation.avatar" class="w-10 h-10 rounded-full" alt="Avatar" />
 </button>
 
-<mat-menu #menu="matMenu" class="!bg-[#fff9fbf9]">
-  <div class="px-4 py-4 flex flex-col items-center text-center">
-    <img [src]="avatar" class="w-16 h-16 rounded-full mb-2" alt="Avatar" />
-    <div class="font-medium text-lg">{{ nombre }}</div>
-    <div class="font-medium text-sm text-gray-500">{{ rol }}</div>
-    <div class="font-medium text-sm text-gray-500">{{ email }}</div>
+<mat-menu #menu="matMenu" class="!bg-[#ffffff] !w-64 !rounded-md !shadow-lg mt-3 border-2 border-[#f4f4f4] ">
+  <div class="px-4 flex flex-col items-center text-center !bg-[#e9e7e7] pb-3">
+    <img [src]="userInformation.avatar" class="w-36 h-36 rounded-full mb-2" alt="Avatar" />
+    <div class="font-medium text-lg">{{ userInformation.userName }}</div>
+    <div class="font-medium text-sm text-gray-500">{{ userInformation.rol }}</div>
+    <div class="font-medium text-sm text-gray-500">{{ userInformation.email }}</div>
   </div>
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
   <button mat-menu-item routerLink="/perfil" (click)="redirectTo('perfil')">
     <mat-icon>person</mat-icon>
     <span>Perfil</span>
@@ -21,5 +21,9 @@
   <button mat-menu-item routerLink="/informacion" (click)="redirectTo('informacion')">
     <mat-icon>info</mat-icon>
     <span>Información</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    <span>Cerrar sesión</span>
   </button>
 </mat-menu>

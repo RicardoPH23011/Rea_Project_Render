@@ -18,7 +18,7 @@
     </div>
 
     <!-- Componente de perfil -->
-    <app-profile-menu></app-profile-menu>
+    <app-profile-menu *ngIf="isUserLoggedIn"></app-profile-menu>
 
 </mat-toolbar>
 <mat-sidenav-container class="h-full">
@@ -26,7 +26,7 @@
         <app-main-menu></app-main-menu>
     </mat-sidenav>
     
-    <mat-sidenav-content>
+    <mat-sidenav-content class="pt-[75px] bg-gray-100 h-full">
         <div [@routeTransition]="route.snapshot.data" style="display: contents;">
         <router-outlet></router-outlet>
         </div>

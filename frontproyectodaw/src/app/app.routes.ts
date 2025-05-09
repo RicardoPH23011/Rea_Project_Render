@@ -10,6 +10,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { InformacionComponent } from './pages/informacion/informacion.component';
 import { PreferencesComponent } from './pages/preferences/preferences.component';
+import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 
 
 
@@ -20,16 +21,6 @@ export const routes: Routes = [
     { path: 'licenses', component: LicensesComponent },
     { path: 'resources', component: ResourceComponent },
     {path: 'dashboard', component: DashboardStudentsComponent},
-    {
-        path: 'dashboard',
-        component: DashboardStudentsComponent,
-        children:
-        [
-            { path: 'perfil', component: PerfilComponent },
-            { path: 'informacion', component: InformacionComponent },
-            { path: 'configuracion', component: ConfiguracionComponent }
-        ]
-    },
     { path: '', component: LandingComponent },
     { path: 'register', component: RegisterComponent },
     {path: 'perfil', component: PerfilComponent},

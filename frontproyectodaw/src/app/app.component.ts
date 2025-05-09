@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { ProfileMenuComponent } from './components/profile-menu/profile-menu.component';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 
 @Component({
@@ -46,9 +46,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'frontproyectodaw';
   isSidenavOpen = true;
+  isUserLoggedIn: boolean = false;
 
 
-  constructor(private http: HttpClient, private router: Router, public route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private router: Router, public route: ActivatedRoute, private authService: AuthService) {}
 
   toggleMenu() {
     this.isSidenavOpen = !this.isSidenavOpen;
@@ -56,6 +57,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.saveUser('1');
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isUserLoggedIn = this.authService.isLoggedIn();        
+      }
+    });
   }
   
   // Funcion para guar usuario en localstorage
