@@ -24,6 +24,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .rol(request.getRol())
+                .avatar(request.getAvatar())
                 .build();
 
         // Check if the email already exists in the database
@@ -49,7 +50,7 @@ public class AuthService {
         Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
 
         if (userOpt.isPresent() && passwordEncoder.matches(request.getPassword(), userOpt.get().getPassword())) {
-            String token = jwtUtil.generateToken(request.getEmail(), userOpt.get().getRol(), userOpt.get().getNombre());
+            String token = jwtUtil.generateToken(request.getEmail(), userOpt.get().getRol(), userOpt.get().getNombre(), userOpt.get().getAvatar());
             return new AuthResponse(token, false, "Login exitoso");
         } else {
             // Return a json response with error message
@@ -65,6 +66,7 @@ public class AuthService {
             updatedUser.setEmail(user.getEmail());
             updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
             updatedUser.setRol(user.getRol());
+            updatedUser.setAvatar(user.getAvatar());
             userRepository.save(updatedUser);
             return "{ \"message\": \"Usuario actualizado exitosamente\", \"error\": false }";
         } else {
@@ -76,7 +78,7 @@ public class AuthService {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) { 
             User user = existingUser.get();
-            return "{ \"nombre\": \"" + user.getNombre() + "\", \"email\": \"" + user.getEmail() + "\", \"rol\": \"" + user.getRol() + "\" }";
+            return "{ \"nombre\": \"" + user.getNombre() + "\", \"email\": \"" + user.getEmail() + "\", \"rol\": \"" + user.getRol() + "\"}";
         } else {
             return "{ \"message\": \"Usuario no encontrado\", \"error\": true }";
 

@@ -130,10 +130,10 @@ export class RegisterComponent implements OnInit {
       const password = this.registerForm.get('password')?.value;
       const fullName = this.registerForm.get('fullName')?.value;
       const rol = "ESTUDIANTE";
+      const avatar = 'AvatarMan1.png';
 
       this.loading = true; // Set loading to true when the request starts
-
-      this.authService.register(fullName, email, password, rol).subscribe({
+      this.authService.register(fullName, email, password, rol, avatar).subscribe({
         next: (response) => {
           console.log(response);
           if (response.error) {

@@ -50,6 +50,13 @@ export class ApiService {
       create: `${this.apiUrl}/licenses`,
       update: (id: number) => `${this.apiUrl}/licenses/${id}`,
       delete: (id: number) => `${this.apiUrl}/licenses/${id}`
-  }
+  },
+  users: {
+    getAll: `${this.apiUrl}/users`,
+    getById: (id: number) => `${this.apiUrl}/users/${id}`,
+    create: `${this.apiUrl}/users`,
+    update: (id: number) => `${this.apiUrl}/users/${id}`,
+    delete: (id: number) => `${this.apiUrl}/users/${id}`
+  },
 }
 }
