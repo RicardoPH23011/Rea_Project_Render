@@ -20,6 +20,16 @@ export const routes: Routes = [
     { path: 'licenses', component: LicensesComponent },
     { path: 'resources', component: ResourceComponent },
     {path: 'dashboard', component: DashboardStudentsComponent},
+    {
+        path: 'dashboard',
+        component: DashboardStudentsComponent,
+        children:
+        [
+            { path: 'perfil', component: PerfilComponent },
+            { path: 'informacion', component: InformacionComponent },
+            { path: 'configuracion', component: ConfiguracionComponent }
+        ]
+    },
     { path: '', component: LandingComponent },
     { path: 'register', component: RegisterComponent },
     {path: 'perfil', component: PerfilComponent},

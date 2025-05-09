@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { ProfileMenuComponent } from './components/profile-menu/profile-menu.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 
 @Component({
