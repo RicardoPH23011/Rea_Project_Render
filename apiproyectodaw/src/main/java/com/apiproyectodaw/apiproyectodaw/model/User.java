@@ -35,7 +35,8 @@ public class User {
     @Column(nullable = false, length = 20)
     private String rol; // ADMIN, ESTUDIANTE, TUTOR
 
-    @Column(nullable = false, length = 100)
+    //Avatar del usuario
+    @Column(name = "avatar", length = 255)
     private String avatar;
 
     @Column(name = "fecha_registro", nullable = false, updatable = false)
