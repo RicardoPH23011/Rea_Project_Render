@@ -1,16 +1,40 @@
-<div class="bg-white p-6 w-full rounded-md shadow-md" class="mt-[64px] bg-white p-6 w-full rounded-md shadow-md">
+<div class="bg-white p-6 w-full rounded-md shadow-md">
 
-<h2 class="text-2xl font-bold mb-4">Bienvenido a tu Perfil</h2>
+  <!-- Avatar y bienvenida -->
+  <mat-card class="!bg-[#ffffff] mb-6 p-15 !shadow-lg" appearance="outlined">
+    <img [src]="userInformation.avatar" class="w-70 h-70 rounded-full mb-4 mx-auto" alt="Avatar" />
+    <mat-card-title class="text-center !font-bold !text-3xl">Bienvenido, {{userInformation.userName}}</mat-card-title>
+  </mat-card>
 
-<p class="mb-2">
-  Esta sección te permite visualizar tu información personal registrada en el sistema.
-</p>
+  <!-- Grid de secciones -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-<div class="mt-4 space-y-2">
-  <p><strong>Nombre completo:</strong> Laura Martínez González</p>
-  <p><strong>Rol:</strong> Estudiante</p>
-  <p><strong>Facultad:</strong> Ciencias de la Computación</p>
-  <p><strong>Estado:</strong> Activo</p>
-</div>
+    <!-- Información Personal -->
+    <mat-card class="!bg-[#ffffff] mb-6 p-6 !shadow-lg" appearance="outlined">
+      <mat-card-title class="!mb-4 text-xl">Información Personal</mat-card-title>
+  
+      <mat-card-content class="space-y-3 text-base text-gray-800">
+        <p><strong>Nombre de usuario:</strong> {{ userInformation.userName }}</p>
+        <p><strong>Correo electrónico:</strong> {{ userInformation.email }}</p>
+        <p><strong>Rol de usuario:</strong> {{ userInformation.rol }}</p>
+      </mat-card-content>
+      
+      <div class="flex justify-start items-center mt-6 px-2">
+        <button mat-raised-button
+                class="!bg-[#ad1d7d] flex items-center gap-2 py-2 px-4 !text-lg hover:!bg-[#505050] shadow-md !text-white !rounded-md cursor-pointer"
+                routerLink="/perfil-edit"
+                (click)="redirectTo('perfil-edit')"><mat-icon>edit</mat-icon>Editar perfil
+        </button>
+      </div>
+    </mat-card>
 
+    <!-- Actividades de Acceso -->
+    <mat-card class="!bg-[#ffffff] mb-6 p-6 !shadow-lg" appearance="outlined">
+      <mat-card-title class="!mb-4 text-xl">Actividades de Accesos</mat-card-title>
+      <mat-card-content class="space-y-3 text-base text-gray-800">
+        <p><strong>Último acceso al sitio:</strong> {{ userInformation.ultimo_acceso }}</p>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
 </div>

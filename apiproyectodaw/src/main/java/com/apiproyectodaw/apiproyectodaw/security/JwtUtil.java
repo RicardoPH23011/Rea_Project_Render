@@ -5,6 +5,8 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Component
@@ -16,11 +18,13 @@ public class JwtUtil {
     private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     public String generateToken(String email, String rol, String nombre, String avatar) {
+        String ultimaFechaAcceso = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return Jwts.builder()
                 .setSubject(email)
                 .claim("rol", rol)
                 .claim("nombre", nombre)
                 .claim("avatar", avatar)
+                .claim("ultimo_acceso", ultimaFechaAcceso)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
