@@ -1,4 +1,4 @@
-package com.apiproyectodaw.apiproyectodaw.controller;
+/* package com.apiproyectodaw.apiproyectodaw.controller;
 
 import com.apiproyectodaw.apiproyectodaw.dto.*;
 import com.apiproyectodaw.apiproyectodaw.model.User;
@@ -49,3 +49,4 @@ public class AuthController {
     }
     
 }
+*/
