@@ -1,4 +1,4 @@
-package com.apiproyectodaw.apiproyectodaw.controller;
+/* package com.apiproyectodaw.apiproyectodaw.controller;
 
 import com.apiproyectodaw.apiproyectodaw.model.Categories;
 import com.apiproyectodaw.apiproyectodaw.service.CategoriesService;
@@ -51,3 +51,4 @@ public class CategoriesController {
         return ResponseEntity.noContent().build();
     }
 }
+/* */
