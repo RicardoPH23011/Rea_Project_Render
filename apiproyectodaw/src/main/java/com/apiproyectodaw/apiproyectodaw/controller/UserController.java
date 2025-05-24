@@ -13,7 +13,7 @@ import com.apiproyectodaw.apiproyectodaw.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "https://proyectodaw-api-646p.onrender.com")
+@CrossOrigin(origins = "https://proyectodaw-front.onrender.com")
 public class UserController {
 
     @Autowired

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/licenses")
-@CrossOrigin(origins = "https://proyectodaw-api-646p.onrender.com")
+@CrossOrigin(origins = "https://proyectodaw-front.onrender.com")
 public class LicensesController {
 
     @Autowired
