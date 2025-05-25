@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
-    apiUrl: 'https://backend-q6d1.onrender.com/'  // <-- reemplaza esta URL por la tuya real
-}
+  production: false,
+  apiUrl: 'http://localhost:8080' // o la misma URL pública para pruebas
+};
